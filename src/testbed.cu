@@ -44,6 +44,8 @@
 #include <set>
 #include <unordered_set>
 
+#include <iostream>
+
 #ifdef NGP_GUI
 #  include <imgui/imgui.h>
 #  include <imgui/backends/imgui_impl_glfw.h>
@@ -393,6 +395,10 @@ void Testbed::translate_camera(const vec3& rel, const mat3& rot, bool allow_up_d
 
 void Testbed::set_nerf_camera_matrix(const mat4x3& cam) {
 	m_camera = m_nerf.training.dataset.nerf_matrix_to_ngp(cam);
+}
+
+void Testbed::set_camera_matrix(const mat4x3& cam) {
+	m_camera = cam;
 }
 
 vec3 Testbed::look_at() const {
@@ -4286,6 +4292,8 @@ void Testbed::render_frame(
 		device = &primary_device();
 	}
 
+	std::cout << "In render_frame\n" << std::endl;
+
 	sync_device(render_buffer, *device);
 
 	{
@@ -4294,6 +4302,18 @@ void Testbed::render_frame(
 	}
 
 	render_frame_epilogue(stream, camera_matrix0, prev_camera_matrix, orig_screen_center, relative_focal_length, foveation, prev_foveation, render_buffer, to_srgb);
+}
+
+void print_mat4x3(const mat4x3& mat) {
+	// Print in matrix form
+	std::cout << "Matrix:" << std::endl;
+	for (int i = 0; i < 4; i++) {
+		std::cout << "[";
+		for (int j = 0; j < 3; j++) {
+			std::cout << mat[i][j] << ", ";
+		}
+		std::cout << "]" << std::endl;
+	}
 }
 
 void Testbed::render_frame_main(
@@ -4306,6 +4326,8 @@ void Testbed::render_frame_main(
 	const Foveation& foveation,
 	int visualized_dimension
 ) {
+	// std::cout << "In render_frame main" << std::endl;
+	// print_mat4x3(camera_matrix0);
 	device.render_buffer_view().clear(device.stream());
 
 	if (!m_network) {
