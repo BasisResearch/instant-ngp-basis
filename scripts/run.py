@@ -143,6 +143,12 @@ def receiveData(conn):
 		return (False, False)
 
 
+def set_camera_matrix(testbed, cam_matrix):
+	testbed.set_camera_matrix(cam_matrix.copy())
+
+def set_rand_cam_matrix(testbed):
+	cam_matrix = np.random.rand(3,4).copy()
+	testbed.set_camera_matrix(cam_matrix)
 
 def accept_connections(testbed):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -151,7 +157,7 @@ def accept_connections(testbed):
 	sock.bind(server_address)
 	sock.listen(1000)
 	while True:
-		conn, addr = sock.accept()
+		conn, addr = sock.accept()	
 		# print("Connection accepted")
 		(good_data, cam_matrix) = receiveData(conn)
 		if good_data:
