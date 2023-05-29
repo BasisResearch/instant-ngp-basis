@@ -3094,7 +3094,15 @@ void Testbed::init_window(int resw, int resh, bool hidden, bool second_window) {
 
 	glfwWindowHint(GLFW_VISIBLE, hidden ? GLFW_FALSE : GLFW_TRUE);
 	std::string title = "Instant Neural Graphics Primitives";
-	m_glfw_window = glfwCreateWindow(m_window_res.x, m_window_res.y, title.c_str(), NULL, NULL);
+	// m_glfw_window = glfwCreateWindow(m_window_res.x, m_window_res.y, title.c_str(), NULL, NULL);
+
+	// Get a pointer to the primary monitor
+GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+
+// glfwCreateWindow uses the monitor to create a fullscreen window
+m_glfw_window = glfwCreateWindow(m_window_res.x, m_window_res.y, title.c_str(), monitor, NULL);
+
+
 	if (m_glfw_window == NULL) {
 		throw std::runtime_error{"GLFW window could not be created."};
 	}
