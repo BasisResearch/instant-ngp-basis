@@ -163,7 +163,7 @@ def accept_connections(testbed):
 		if good_data:
 			testbed.set_camera_matrix(cam_matrix)
 
-def run_djali(snapshot):
+def run_djali(snapshot = ""):
 	gui = True
 	testbed = ngp.Testbed()
 	testbed.root_dir = ROOT_DIR
@@ -197,7 +197,7 @@ def run_djali(snapshot):
 		# if args.vr:
 		# 	testbed.init_vr()
 
-	if True: # args.load_snapshot:
+	if snapshot != "": # args.load_snapshot:
 		scene_info = get_scene(snapshot)
 		if scene_info is not None:
 			load_snapshot = default_snapshot_filename(scene_info)
