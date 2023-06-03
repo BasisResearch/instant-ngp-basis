@@ -167,6 +167,8 @@ def run_djali(snapshot = ""):
 	gui = True
 	testbed = ngp.Testbed()
 	testbed.root_dir = ROOT_DIR
+	testbed.display_gui = False
+	testbed.dynamic_res_target_fps = 80.0
 
 	# for file in args.files:
 	# 	scene_info = get_scene(file)
