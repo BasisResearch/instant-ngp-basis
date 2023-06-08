@@ -1912,8 +1912,18 @@ __global__ void init_rays_with_payload_kernel_nerf(
 		aperture_size = 0.0;
 	}
 
+	bool left_eye = x < resolution.x / 2;
+
+
 	vec2 pixel_offset = ld_random_pixel_offset(snap_to_pixel_centers ? 0 : sample_index);
 	vec2 uv = vec2{(float)x + pixel_offset.x, (float)y + pixel_offset.y} / vec2(resolution);
+	if (left_eye) {
+		uv[0] *= 2.0;
+	}
+	else {
+		uv[0] = uv[0] * 2.0 - 1.0;
+		parallax_shift.x = (-0.5f * parallax_shift.x);
+	}
 	float ray_time = rolling_shutter.x + rolling_shutter.y * uv.x + rolling_shutter.z * uv.y + rolling_shutter.w * ld_random_val(sample_index, idx * 72239731);
 	Ray ray = uv_to_ray(
 		sample_index,
