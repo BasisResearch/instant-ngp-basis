@@ -169,6 +169,7 @@ def run_djali(snapshot = ""):
 	testbed.root_dir = ROOT_DIR
 	testbed.display_gui = False
 	testbed.dynamic_res_target_fps = 80.0
+	testbed.camera_smoothing = True
 
 	# for file in args.files:
 	# 	scene_info = get_scene(file)
