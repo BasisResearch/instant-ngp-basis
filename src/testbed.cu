@@ -3107,6 +3107,7 @@ m_glfw_window = glfwCreateWindow(m_window_res.x, m_window_res.y, title.c_str(), 
 		throw std::runtime_error{"GLFW window could not be created."};
 	}
 	glfwMakeContextCurrent(m_glfw_window);
+	glfwSetInputMode(m_glfw_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 #ifdef _WIN32
 	if (gl3wInit()) {
 		throw std::runtime_error{"GL3W could not be initialized."};
